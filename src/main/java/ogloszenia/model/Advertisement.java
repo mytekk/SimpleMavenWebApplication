@@ -3,6 +3,7 @@ package ogloszenia.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 
@@ -66,10 +67,24 @@ public class Advertisement {
 	Integer rating;
 
 	@Column(nullable=false)
-	String category;
+	@Enumerated(EnumType.STRING) /*w baazaie danych zostanie zapisany string z nazwa kategorii*/
+	CATEGORY category;
 
 	@Column(nullable=false)
 	Integer views;
+
+	@OneToMany(mappedBy="advertisementId")
+	Set<Message> messages;
+
+    @OneToMany(mappedBy = "advertisementId")
+    Set<Image> images;
+
+    @ManyToMany
+            @JoinTable(
+                    joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
+                    inverseJoinColumns = @JoinColumn(name = "watcher_id")
+            )
+    Set<User> watchers;
 
 
 	public Advertisement(){}
@@ -158,11 +173,11 @@ public class Advertisement {
 		this.rating = rating;
 	}
 
-	public String getCategory() {
+	public CATEGORY getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(CATEGORY category) {
 		this.category = category;
 	}
 
@@ -190,5 +205,7 @@ public class Advertisement {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
+
+
 
 }

@@ -1,6 +1,7 @@
 package ogloszenia;
 
 import ogloszenia.model.Advertisement;
+import ogloszenia.model.User;
 import ogloszeniar.hibernate.util.HibernateUtil;
 import org.hibernate.Session;
 

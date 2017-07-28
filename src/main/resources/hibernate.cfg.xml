@@ -16,5 +16,7 @@
 
         <mapping class="ogloszenia.model.Advertisement" />
         <mapping class="ogloszenia.model.User" />
+        <mapping class="ogloszenia.model.Message" />
+        <mapping class="ogloszenia.model.Image" />
     </session-factory>
 </hibernate-configuration>
