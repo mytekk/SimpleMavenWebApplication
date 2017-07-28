@@ -16,7 +16,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Advertisement advertisementId;
+    private Advertisement advertisement;
 
     @Lob
     private byte[] img;
@@ -32,12 +32,12 @@ public class Image {
         this.id = id;
     }
 
-    public Advertisement getAdvertisementId() {
-        return advertisementId;
+    public Advertisement getAdvertisement() {
+        return advertisement;
     }
 
-    public void setAdvertisementId(Advertisement advertisementId) {
-        this.advertisementId = advertisementId;
+    public void setAdvertisement(Advertisement advertisementId) {
+        this.advertisement = advertisementId;
     }
 
     public byte[] getImg() {
