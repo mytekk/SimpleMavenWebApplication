@@ -36,8 +36,8 @@ public class Image {
         return advertisement;
     }
 
-    public void setAdvertisement(Advertisement advertisementId) {
-        this.advertisement = advertisementId;
+    public void setAdvertisement(Advertisement advertisement) {
+        this.advertisement = advertisement;
     }
 
     public byte[] getImg() {

@@ -23,9 +23,9 @@ public class AdvertisementRepository {
         try {
             session = HibernateUtil.openSession().getSession();
             String hql = "SELECT e FROM Advertisement e WHERE e.id = :id";
-            Query query = session.createQuery(hql);
+            Query<Advertisement> query = session.createQuery(hql, Advertisement.class);
             query.setParameter("id", id);
-            return Optional.ofNullable((Advertisement) query.getSingleResult());
+            return Optional.ofNullable(query.getSingleResult());
         } catch (Exception ex) {
             ex.printStackTrace();
             session.getTransaction().rollback();

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-
 public class Advertisement {
 	/*
 	tytul
@@ -39,7 +38,7 @@ public class Advertisement {
 	byte[] img;
 
 	@JoinColumn(nullable=false)
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     User owner;
 
 	@Column(nullable=false)
@@ -73,10 +72,10 @@ public class Advertisement {
 	@Column(nullable=false)
 	Integer views;
 
-	@OneToMany(mappedBy="advertisementId")
+	@OneToMany(mappedBy="advertisement")
 	Set<Message> messages;
 
-    @OneToMany(mappedBy = "advertisementId")
+    @OneToMany(mappedBy = "advertisement")
     Set<Image> images;
 
     @ManyToMany
@@ -88,6 +87,21 @@ public class Advertisement {
 
 
 	public Advertisement(){}
+
+    public Advertisement(String title, BigDecimal price, String description, String location, User user) {
+        this.title = title;
+        this.text = description;
+        this.price = price;
+        this.cityName = location;
+        this.owner = user;
+        this.category = CATEGORY.MOTORYZACJA;
+        this.isPremium = false;
+        this.isActive = true;
+        this.views = new Integer(0);
+        this.dateFrom = LocalDate.now();
+        this.dateTo = this.dateFrom.plusMonths(1);
+        this.rating = new Integer(0);
+    }
 
 
 	public byte[] getImg() {

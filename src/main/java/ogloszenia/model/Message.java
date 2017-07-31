@@ -32,7 +32,7 @@ public class Message {
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(nullable=false)
-    private Advertisement advertisementId;
+    private Advertisement advertisement;
 
     @JoinColumn(nullable=false)
     @ManyToOne
@@ -59,12 +59,12 @@ public class Message {
         this.id = id;
     }
 
-    public Advertisement getAdvertisementId() {
-        return advertisementId;
+    public Advertisement getAdvertisement() {
+        return advertisement;
     }
 
-    public void setAdvertisementId(Advertisement advertisementId) {
-        this.advertisementId = advertisementId;
+    public void setAdvertisement(Advertisement advertisementId) {
+        this.advertisement = advertisementId;
     }
 
     public User getMessageSender() {

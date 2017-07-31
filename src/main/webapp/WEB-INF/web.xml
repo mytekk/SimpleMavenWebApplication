@@ -4,4 +4,32 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>addNewAdServlet</servlet-name>
+    <servlet-class>ogloszenia.servlets.AddNewAdServlet</servlet-class>
+    </servlet>
+  <servlet-mapping>
+    <servlet-name>addNewAdServlet</servlet-name>
+    <url-pattern>/ad-new-ad</url-pattern>
+  </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addNewUserServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.RegisterUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addNewUserServlet</servlet-name>
+        <url-pattern>/ad-new-user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>archiveAdServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.ArchiveAdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>archiveAdServlet</servlet-name>
+        <url-pattern>/archive-ad</url-pattern>
+    </servlet-mapping>
+
 </web-app>

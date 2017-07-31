@@ -49,6 +49,13 @@ public class User {
 
     public User() {}
 
+    public User(String nick, String password, String email, String cityName) {
+        this.nick = nick;
+        this.password = password;
+        this.email = email;
+        this.cityName = cityName;
+    }
+
     public Integer getId() {
         return id;
     }
