@@ -73,7 +73,7 @@ public class Advertisement {
 	Integer views;
 
 	@OneToMany(mappedBy="advertisement")
-	Set<Message> messages;
+	Set<Conversation> conversations;
 
     @OneToMany(mappedBy = "advertisement")
     Set<Image> images;

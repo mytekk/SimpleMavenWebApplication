@@ -1,0 +1,68 @@
+package ogloszenia.servlets;
+
+import ogloszenia.model.Advertisement;
+import ogloszenia.model.Conversation;
+import ogloszenia.model.ConversationMessage;
+import ogloszenia.model.User;
+import ogloszenia.repository.AdvertisementRepository;
+import ogloszenia.repository.ConversationMessageRepository;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.Optional;
+
+/**
+ * Created by RENT on 2017-08-01.
+ */
+public class AddNewConversationServlet extends HttpServlet {
+
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //tymczasowi uzytkownik rozpoczynajacy nowakonwersacje
+        User messageSender = new User("Romek", "1111", "romek@gmail.com", "Poznan");
+
+        String text;
+        Integer advertisementId = 0; //ogloszenie, do ktorego przypisana bedzie wiadomosc
+
+        //pobranie zmiennychz formularza
+        text = req.getParameter("message");
+        try { //ktos moze tu przyslac stringa, albo liczbe mniejsza od zera itp...
+            advertisementId = Integer.valueOf(req.getParameter("advertisementId"));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        PrintWriter writer = resp.getWriter();
+
+        //na podstawie id ogloszenia pobieram caly obiekt i jego wrzucam jako pole do nowego obiektu conversation
+        Optional<Advertisement> adById = AdvertisementRepository.findById(advertisementId);
+
+        if (text.isEmpty() || !adById.isPresent()) {
+            writer.write("blad!");
+        } else {
+            //tworzenowa konwersacje
+            Conversation conversation = new Conversation();
+
+            //wiem, ze obiekt Ogloszenie istnieje, wiec moge pobrac obiekt w nim zawarty
+            Advertisement newAdvertisement = adById.get();
+
+            //ustawiam pola nowego obiektu konwersacji
+            conversation.setMessageDate(LocalDate.now());
+            conversation.setAdvertisement(newAdvertisement);
+            conversation.setConversationSender(messageSender); //wysylajacym jest zawsze zalogowanu user, jego dane wezniemy z sesji
+            conversation.setConversationReceiver(newAdvertisement.getOwner()); //odiorca bedzie wlasciciel ogloszenia, na rzecz ktorego rozpoczynamy konwersacje
+
+            //na koncu towrze nowa, pierwsza wiadomosc w tej konwesacji
+            ConversationMessage conversationMessage = new ConversationMessage(conversation, text, messageSender);
+            ConversationMessageRepository.persist(conversationMessage);
+
+            resp.getWriter().write("wiadomosc zostala wyslana");
+        }
+    }
+}

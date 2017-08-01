@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.Set;
 
 /*
  * Wiadomosc
@@ -23,7 +24,7 @@ import java.time.LocalDate;
  */
 
 @Entity
-public class Message {
+public class Conversation {
 
     @Id
     @Column(name="id", unique=true)
@@ -36,19 +37,19 @@ public class Message {
 
     @JoinColumn(nullable=false)
     @ManyToOne
-    private User messageSender;
+    private User conversationSender;
 
     @JoinColumn(nullable=false)
     @ManyToOne
-    private User messageReceiver;
+    private User conversationReceiver;
 
-    @Column(nullable=false)
-    private String messageContent;
+    @OneToMany(mappedBy = "conversation")
+    Set<ConversationMessage> conversationMessages;
 
     @Column(nullable=false)
     private LocalDate messageDate;
 
-    public Message() {
+    public Conversation() {
     }
 
     public Integer getId() {
@@ -67,28 +68,20 @@ public class Message {
         this.advertisement = advertisementId;
     }
 
-    public User getMessageSender() {
-        return messageSender;
+    public User getConversationSender() {
+        return conversationSender;
     }
 
-    public void setMessageSender(User messageSender) {
-        this.messageSender = messageSender;
+    public void setConversationSender(User conversationSender) {
+        this.conversationSender = conversationSender;
     }
 
-    public User getMessageReceiver() {
-        return messageReceiver;
+    public User getConversationReceiver() {
+        return conversationReceiver;
     }
 
-    public void setMessageReceiver(User messageReceiver) {
-        this.messageReceiver = messageReceiver;
-    }
-
-    public String getMessageContent() {
-        return messageContent;
-    }
-
-    public void setMessageContent(String messageContent) {
-        this.messageContent = messageContent;
+    public void setConversationReceiver(User conversationReceiver) {
+        this.conversationReceiver = conversationReceiver;
     }
 
     public LocalDate getMessageDate() {

@@ -32,4 +32,14 @@
         <url-pattern>/archive-ad</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>addNewMessageServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.AddNewConversationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addNewMessageServlet</servlet-name>
+        <url-pattern>/add-new-conversation</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

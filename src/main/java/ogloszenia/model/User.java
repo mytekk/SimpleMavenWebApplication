@@ -38,14 +38,17 @@ public class User {
     @OneToMany(mappedBy="owner")
     Set<Advertisement> ads;
 
-    @OneToMany(mappedBy="messageSender")
-    Set<Message> sendMessages;
+    @OneToMany(mappedBy="conversationSender")
+    Set<Conversation> sendConversations;
 
-    @OneToMany(mappedBy="messageReceiver")
-    Set<Message> receivedMessages;
+    @OneToMany(mappedBy="conversationReceiver")
+    Set<Conversation> receivedConversations;
 
     @ManyToMany(mappedBy = "watchers")
     Set<Advertisement> followedAdvertisements;
+
+    @OneToMany(mappedBy = "author")
+    Set<ConversationMessage> conversationMessages;
 
     public User() {}
 
