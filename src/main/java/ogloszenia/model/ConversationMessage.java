@@ -6,6 +6,14 @@ import javax.persistence.*;
  * Created by RENT on 2017-08-01.
  */
 
+/**
+ * Wiadomość - pojedyncza wiadomosc przypisana o danej konwersacji
+ * id
+ * id konwersacji (caly obiekt)
+ * text
+ * autor (autorem bedzie albo nadawca konwersacji albo odbiorca konwesacji: jedna z tym dwoch osob)
+ */
+
 @Entity
 public class ConversationMessage {
 

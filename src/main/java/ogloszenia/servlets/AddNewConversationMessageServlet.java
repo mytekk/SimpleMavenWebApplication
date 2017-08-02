@@ -16,23 +16,33 @@ import java.util.Optional;
 /**
  * Created by RENT on 2017-08-01.
  */
+
+/**
+ * servlet, ktory zapisuje nowa wiadomosc do istniejacej juz konwersacji
+ */
 public class AddNewConversationMessageServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         Integer conversationId = 0;
         String text = "";
+
+        //tymczasowi uzytkownik bedacy autorem wiadomosci
         User messageSender = new User("Romek", "11111", "romek@gmail.com", "Poznan");
 
-        try {
+        //pobranie zmiennych z formularza
+        try {  //czy to jest potrzebne? conversationId ma chyba przychodzic z hidden inputa
             conversationId = Integer.valueOf(req.getParameter("conversationId"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         text = req.getParameter("message");
 
-        //pobieramy konwrsacje
+        //proba pobrania konwersacji
         Optional<Conversation> conversationTmp = ConversationRepository.findById(conversationId);
+
+        //jesli obiekt istnieje (czyli ze z formularza przyszlo poprawne id, oraz takie, ktore istnieje w bazie) to moge dzialac dalej
         if (conversationTmp.isPresent()) {
             Conversation conversation = conversationTmp.get();
 

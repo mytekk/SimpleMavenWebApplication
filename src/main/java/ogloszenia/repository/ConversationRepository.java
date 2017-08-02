@@ -34,6 +34,7 @@ public class ConversationRepository {
         }
     }
 
+    //wyszukiwanie konwersacji po id uzytkownika. Zakladamy, ze uzytkownik mogl byc nadawca lub odbiorca konwersacji.
     public static List<Conversation> findByUserId(Integer id) {
         Session session = null;
         try {
@@ -41,7 +42,7 @@ public class ConversationRepository {
             String hql = "SELECT e FROM Conversation e WHERE e.conversationSender.id = :id or e.conversationReceiver.id = :id";
             Query<Conversation> query = session.createQuery(hql, Conversation.class);
             query.setParameter("id", id);
-            return Optional.ofNullable(query.list());
+            return query.list();
         } catch (Exception ex) {
             ex.printStackTrace();
             session.getTransaction().rollback();

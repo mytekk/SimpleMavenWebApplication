@@ -19,18 +19,22 @@ import java.util.Optional;
 /**
  * Created by RENT on 2017-08-01.
  */
+
+/**
+ * servlet, ktory tworzy nową konwersacje i jednoczesnie dodaje do niej pierwsza wiadomosc
+ */
 public class AddNewConversationServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //tymczasowi uzytkownik rozpoczynajacy nowakonwersacje
+        //tymczasowi uzytkownik rozpoczynajacy nowa konwersacje
         User messageSender = new User("Romek", "1111", "romek@gmail.com", "Poznan");
 
         String text;
         Integer advertisementId = 0; //ogloszenie, do ktorego przypisana bedzie wiadomosc
 
-        //pobranie zmiennychz formularza
+        //pobranie zmiennych z formularza
         text = req.getParameter("message");
         try { //ktos moze tu przyslac stringa, albo liczbe mniejsza od zera itp...
             advertisementId = Integer.valueOf(req.getParameter("advertisementId"));
@@ -49,7 +53,7 @@ public class AddNewConversationServlet extends HttpServlet {
             //tworzenowa konwersacje
             Conversation conversation = new Conversation();
 
-            //wiem, ze obiekt Ogloszenie istnieje, wiec moge pobrac obiekt w nim zawarty
+            //wiem, ze obiekt Ogloszenie istnieje (patrz isPresent w if-ie), wiec moge pobrac obiekt w nim zawarty
             Advertisement newAdvertisement = adById.get();
 
             //ustawiam pola nowego obiektu konwersacji
@@ -62,7 +66,7 @@ public class AddNewConversationServlet extends HttpServlet {
             ConversationMessage conversationMessage = new ConversationMessage(conversation, text, messageSender);
             ConversationMessageRepository.persist(conversationMessage);
 
-            resp.getWriter().write("wiadomosc zostala wyslana");
+            resp.getWriter().write("utworzono nowy watek wiadomosci i wyslano pierwsza wiadomosc");
         }
     }
 }

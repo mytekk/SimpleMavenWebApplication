@@ -15,11 +15,11 @@ import java.time.LocalDate;
 import java.util.Set;
 
 /*
- * Wiadomosc
+ * konwersacja - watek wiadomosci dotyczacy danego ogloszenia pomiedzy wlascicielem a jakims innym userem
     id ogloszenia
     id nadawca
     id odbiorca
-    tresc
+    zbior wiadomosci w tym wątku
     data
  */
 

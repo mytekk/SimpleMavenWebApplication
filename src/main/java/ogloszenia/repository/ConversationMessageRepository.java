@@ -9,6 +9,7 @@ import org.hibernate.Session;
  */
 public class ConversationMessageRepository {
 
+    //dodanie pojedynczej wiadomosci do bazy
     public static Integer persist(ConversationMessage conversationMessage) {
         Session session = null;
         try {
