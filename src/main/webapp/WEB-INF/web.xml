@@ -33,12 +33,30 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>addNewMessageServlet</servlet-name>
+        <servlet-name>addNewConversationServlet</servlet-name>
         <servlet-class>ogloszenia.servlets.AddNewConversationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>addNewMessageServlet</servlet-name>
+        <servlet-name>addNewConversationServlet</servlet-name>
         <url-pattern>/add-new-conversation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addNewConversationMessageServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.AddNewConversationMessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addNewConversationMessageServlet</servlet-name>
+        <url-pattern>/add-new-conversation-message</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>searchAdServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.SearchAdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchAdServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
 
 

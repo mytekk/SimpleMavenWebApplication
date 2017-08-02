@@ -117,4 +117,45 @@ public class AdvertisementRepository {
         }
     }
 
+    //wyszukiwanie po frazie
+    public static List<Advertisement> findByPhrase(String phrase) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession().getSession();
+            String hql = "SELECT e FROM Advertisement e WHERE upper(e.title) like :param or upper(e.text) like :param order by e.id DESC";
+            Query query = session.createQuery(hql, Advertisement.class);
+            query.setParameter("param", "%" + phrase.toUpperCase() + "%"); //w zapytaniu tez robie wielkie litery
+            return query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+            return Collections.emptyList();
+        } finally {
+            session.close();
+        }
+    }
+
+    //wyszukiwanie po frazie i lokalizacji
+    public static List<Advertisement> findByPhraseAndLocation(String phrase, String location) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession().getSession();
+            String hql = "SELECT e FROM Advertisement e WHERE " +
+                    "(upper(e.title) like :param and upper(e.cityName) like :location ) " +
+                    "or " +
+                    "(upper(e.text) like :param and upper(e.cityName) like :location) " +
+                    "order by e.id DESC";
+            Query query = session.createQuery(hql, Advertisement.class);
+            query.setParameter("param", "%" + phrase.toUpperCase() + "%"); //w zapytaniu tez robie wielkie litery
+            query.setParameter("location", "%" + location.toUpperCase() + "%");
+            return query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+            return Collections.emptyList();
+        } finally {
+            session.close();
+        }
+    }
+
 }

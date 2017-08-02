@@ -63,6 +63,9 @@ public class AddNewConversationServlet extends HttpServlet {
             conversation.setConversationReceiver(newAdvertisement.getOwner()); //odiorca bedzie wlasciciel ogloszenia, na rzecz ktorego rozpoczynamy konwersacje
 
             //na koncu towrze nowa, pierwsza wiadomosc w tej konwesacji
+            //UWAGA - nie musze zapisywac do bazy powyzej utworzonego obiektu conveersation
+            //bo w relacji miedzy tymi encjami jest wpisana kaskada, wiec przy zapisuwaniu nowej conversationMessage
+            //najpierw zostanie wpisany do bazy obiekt conversation
             ConversationMessage conversationMessage = new ConversationMessage(conversation, text, messageSender);
             ConversationMessageRepository.persist(conversationMessage);
 
