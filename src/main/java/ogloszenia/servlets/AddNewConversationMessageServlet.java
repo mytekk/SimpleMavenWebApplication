@@ -5,6 +5,7 @@ import ogloszenia.model.ConversationMessage;
 import ogloszenia.model.User;
 import ogloszenia.repository.ConversationMessageRepository;
 import ogloszenia.repository.ConversationRepository;
+import ogloszenia.repository.UserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,13 @@ public class AddNewConversationMessageServlet extends HttpServlet {
         String text = "";
 
         //tymczasowi uzytkownik bedacy autorem wiadomosci
-        User messageSender = new User("Romek", "11111", "romek@gmail.com", "Poznan");
+        User messageSender = null;
+        Optional<User> mesageSenderOptional = UserRepository.findByMail("romek@gmail.com");
+        if (mesageSenderOptional.isPresent()) {
+            messageSender = mesageSenderOptional.get();
+        } else {
+            messageSender = new User("Romek", "11111", "romek@gmail.com", "Poznan");
+        }
 
         //pobranie zmiennych z formularza
         try {  //czy to jest potrzebne? conversationId ma chyba przychodzic z hidden inputa

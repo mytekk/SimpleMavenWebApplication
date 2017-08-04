@@ -96,7 +96,7 @@
 
                     <c:forEach items="${conversationMessages}" var="cm">
 
-                        <c:if test="${cm.owner.id==1}">
+                        <c:if test="${cm.owner.id==8}">
                             <div class="col-md-12">
                                 <div class="panel panel-default my-message">
                                     <div class="panel-heading date-panel ">${cm.createDate}</div>
@@ -105,7 +105,7 @@
                             </div>
                         </c:if>
 
-                        <c:if test="${cm.owner.id !=1}">
+                        <c:if test="${cm.owner.id !=8}">
                             <div class="col-md-12">
                                 <div class="panel panel-default other-message">
                                     <div class="panel-heading date-panel ">${cm.createDate}</div>
@@ -149,8 +149,11 @@
                 </div>
 
                 <div class="message-container">
-                    <textarea class="form-control" name="message" rows="6"></textarea>
-                    <button class="btn btn-classic col-md-12">Wyślij</button>
+                    <form action="/send-message" method="post">
+                        <textarea name="message" class="form-control" rows="6"></textarea>
+                        <input type="hidden" name="conversationId" value="${conversation.id}"/>
+                        <button class="btn btn-classic col-md-12" type="submit">Wyslij</button>
+                    </form>
                 </div>
             </div>
 
