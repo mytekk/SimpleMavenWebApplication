@@ -1,6 +1,7 @@
 package ogloszenia.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * Created by RENT on 2017-08-01.
@@ -33,6 +34,9 @@ public class ConversationMessage {
     @JoinColumn
     User author;
 
+    @Column(nullable = false)
+    LocalDate createDate;
+
     public ConversationMessage() {
     }
 
@@ -40,6 +44,7 @@ public class ConversationMessage {
         this.conversation = conversation;
         this.messageContent = messageContent;
         this.author = author;
+        this.createDate = LocalDate.now();
     }
 
     public Integer getId() {
@@ -72,5 +77,13 @@ public class ConversationMessage {
 
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
     }
 }

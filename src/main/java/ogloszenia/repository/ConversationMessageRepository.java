@@ -4,6 +4,10 @@ import ogloszenia.model.ConversationMessage;
 import ogloszeniar.hibernate.util.HibernateUtil;
 import org.hibernate.Session;
 
+import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by RENT on 2017-08-01.
  */
@@ -26,6 +30,23 @@ public class ConversationMessageRepository {
             session.close();
         }
 
+    }
+
+    public static List<ConversationMessage> findByConversationId(Integer id) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT  e FROM ConversationMessage e WHERE e.conversation.id=:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id",id);
+            return  query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+            return Collections.emptyList();
+        } finally {
+            session.close();
+        }
     }
 
 }

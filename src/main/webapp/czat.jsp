@@ -1,3 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="ogloszenia.repository.*,java.util.List,ogloszenia.model.*,java.util.Optional"%>
+
+<%
+    Integer conversationId = Integer.valueOf(request.getParameter("conversationId"));
+    Optional<Conversation> conversation = ConversationRepository.findById(conversationId);
+    if (conversation.isPresent()) {
+        pageContext.setAttribute("conversation", conversation.get());
+        List<ConversationMessage> conversationMessages = ConversationMessageRepository.findByConversationId(conversationId);
+        pageContext.setAttribute("conversationMessages", conversationMessages);
+    }
+%>
+
 <!DOCTYPE html>
 
 <head>
@@ -77,9 +91,35 @@
 
             <!-- srodek - czat -->
             <div class="col-md-8">
-                <div class="conversation-wrapper">
+                <div class="message-wrapper">
+
+
+                    <c:forEach items="${conversationMessages}" var="cm">
+
+                        <c:if test="${cm.owner.id==1}">
+                            <div class="col-md-12">
+                                <div class="panel panel-default my-message">
+                                    <div class="panel-heading date-panel ">${cm.createDate}</div>
+                                    <div class="panel-body">${cm.messageContent}</div>
+                                </div>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${cm.owner.id !=1}">
+                            <div class="col-md-12">
+                                <div class="panel panel-default other-message">
+                                    <div class="panel-heading date-panel ">${cm.createDate}</div>
+                                    <div class="panel-body">${cm.messageContent}</div>
+                                </div>
+                            </div>
+                        </c:if>
+
+
+                    </c:forEach>
+
 
                     <!-- wiadomosc AAA -->
+                    <!--
                     <div class="col-md-12">
                     <div class="panel panel-default my-conversation">
                         <div class="panel-heading date-panel">
@@ -90,8 +130,10 @@
                         </div>
                     </div>
                     </div>
+                    -->
 
                     <!-- wiadomosc BBB -->
+                    <!--
                     <div class="col-md-12">
                     <div class="panel panel-default other-conversation">
                         <div class="panel-heading date-panel">
@@ -102,35 +144,12 @@
                         </div>
                     </div>
                     </div>
-                    
-                    <!-- wiadomosc AAA -->
-                    <div class="col-md-12">
-                    <div class="panel panel-default my-conversation">
-                        <div class="panel-heading date-panel">
-                            Panel heading without title
-                        </div>
-                        <div class="panel-body">
-                            Panel content
-                        </div>
-                    </div>
-                    </div>
-
-                    <!-- wiadomosc BBB -->
-                    <div class="col-md-12">
-                    <div class="panel panel-default other-conversation">
-                        <div class="panel-heading date-panel">
-                            <h3 class="panel-title">Some other title</h3>
-                        </div>
-                        <div class="panel-body">
-                            Panel content
-                        </div>
-                    </div>
-                    </div>
+                    -->
                     
                 </div>
 
-                <div class="conversation-container">
-                    <textarea class="form-control" name="conversation" rows="6"></textarea>
+                <div class="message-container">
+                    <textarea class="form-control" name="message" rows="6"></textarea>
                     <button class="btn btn-classic col-md-12">Wyślij</button>
                 </div>
             </div>
