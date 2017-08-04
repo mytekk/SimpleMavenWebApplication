@@ -41,7 +41,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addNewConversationServlet</servlet-name>
-        <url-pattern>/add-new-conversation</url-pattern>
+        <url-pattern>/add-new-conv</url-pattern>
     </servlet-mapping>
 
     <servlet>

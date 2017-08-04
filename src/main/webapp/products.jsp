@@ -87,12 +87,12 @@
             <!--  ogloszenie -->
             <div class="media panel">
                 <div class="media-left media-middle">
-                    <a href="#">
+                    <a href="product.jsp?advertisementId=${ad.id}">
                         <img class="media-object small-object" src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg" alt="brak zdjeci">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">${ad.title}</h4>
+                    <h4 class="media-heading"><a href="product.jsp?advertisementId=${ad.id}">${ad.title}</a></h4>
                     ${ad.text}
                     <h3 class="price">${ad.price} zł.</h3>
                 </div>
