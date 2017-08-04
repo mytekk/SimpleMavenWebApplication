@@ -1,5 +1,7 @@
 package ogloszenia.model;
 
+import ogloszenia.repository.UserRepository;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -88,13 +90,13 @@ public class Advertisement {
 
 	public Advertisement(){}
 
-    public Advertisement(String title, BigDecimal price, String description, String location, User user) {
+    public Advertisement(String title, BigDecimal price, String description, String location, CATEGORY category) {
         this.title = title;
         this.text = description;
         this.price = price;
         this.cityName = location;
-        this.owner = user;
-        this.category = CATEGORY.MOTORYZACJA;
+
+        this.category = category;
         this.isPremium = false;
         this.isActive = true;
         this.views = new Integer(0);

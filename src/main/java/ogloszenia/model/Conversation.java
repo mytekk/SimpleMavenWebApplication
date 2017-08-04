@@ -28,11 +28,11 @@ public class Conversation {
     private Advertisement advertisement;
 
     @JoinColumn(nullable=false)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User conversationSender;
 
     @JoinColumn(nullable=false)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User conversationReceiver;
 
     @OneToMany(mappedBy = "conversation")

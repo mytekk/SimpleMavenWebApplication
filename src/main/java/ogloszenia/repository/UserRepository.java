@@ -2,6 +2,7 @@ package ogloszenia.repository;
 
 import ogloszenia.model.User;
 import ogloszeniar.hibernate.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -12,6 +13,8 @@ import java.util.Optional;
  * Created by RENT on 2017-07-28.
  */
 public class UserRepository {
+
+    final static Logger logger = Logger.getLogger(ConversationMessageRepository.class);
 
     public static Optional<User> findByMail(String email) {
         Session session = null;
@@ -31,6 +34,7 @@ public class UserRepository {
     }
 
     public static void persist(User user) {
+
         Session session = null;
         try {
             session = HibernateUtil.openSession().getSession();
@@ -40,6 +44,23 @@ public class UserRepository {
         } catch (Exception ex) {
             ex.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
+    public static Optional<User> findById(int id) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT  e FROM User e WHERE e.id=:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id",id);
+            return  Optional.ofNullable( (User)query.getSingleResult());
+        } catch (Exception ex) {
+            logger.error(ex);
+            session.getTransaction().rollback();
+            return Optional.empty();
         } finally {
             session.close();
         }

@@ -18,6 +18,29 @@ public class ConversationMessageRepository {
 
     final static Logger logger = Logger.getLogger(ConversationMessageRepository.class);
 
+    public static Integer addNewConversationMessage(ConversationMessage conversationMessage, int userId) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            session.getTransaction().begin();
+
+            conversationMessage.setAuthor(UserRepository.findById(userId).get());
+
+            session.persist(conversationMessage);
+            session.getTransaction().commit();
+            logger.info("ddddddddd");
+            return conversationMessage.getId();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+            session.getTransaction().rollback();
+            return 0;
+        } finally {
+            session.close();
+        }
+
+    }
+
     //dodanie pojedynczej wiadomosci do bazy
     public static Integer persist(ConversationMessage conversationMessage) {
         Session session = null;
@@ -25,10 +48,11 @@ public class ConversationMessageRepository {
             session = HibernateUtil.openSession();
             session.getTransaction().begin();
 
-            if(! session.contains(conversationMessage.getConversation())) {
+            if(! session.contains(conversationMessage.getConversation()) && conversationMessage.getConversation().getId()!= null ) {
+
                 conversationMessage.setConversation((Conversation) session.merge(conversationMessage.getConversation()));
             }
-            if(! session.contains(conversationMessage.getAuthor())) {
+            if(! session.contains(conversationMessage.getAuthor()) && conversationMessage.getAuthor().getId()!= null) {
                 conversationMessage.setAuthor((User) session.merge(conversationMessage.getAuthor()));
             }
 

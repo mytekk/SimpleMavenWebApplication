@@ -4,6 +4,7 @@ import ogloszenia.model.Advertisement;
 import ogloszenia.model.CATEGORY;
 import ogloszenia.model.User;
 import ogloszeniar.hibernate.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -18,6 +19,8 @@ import java.util.Optional;
  */
 public class AdvertisementRepository {
 
+    final static Logger logger = Logger.getLogger(ConversationMessageRepository.class);
+
     public static Optional<Advertisement> findById(Integer id) {
         Session session = null;
         try {
@@ -27,7 +30,7 @@ public class AdvertisementRepository {
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return Optional.empty();
         } finally {
@@ -44,7 +47,7 @@ public class AdvertisementRepository {
             query.setParameter("category", category);
             return query.getResultList();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return Collections.emptyList();
         } finally {
@@ -54,16 +57,19 @@ public class AdvertisementRepository {
     }
 
     //dodanie ogloszenia
-    public static Integer persist(Advertisement advertisement) {
+    public static Integer persist(Advertisement advertisement, Integer userId) {
         Session session = null;
         try {
             session = HibernateUtil.openSession().getSession();
             session.getTransaction().begin();
+            advertisement.setOwner( (User) session.merge(UserRepository.findById(userId).get()));
+            //
+            //zadanego usera dopisuje jako ownera ogloszenia
             session.persist(advertisement);
             session.getTransaction().commit();
             return advertisement.getId();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return 0;
         } finally {
@@ -82,7 +88,7 @@ public class AdvertisementRepository {
             transaction.commit();
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             transaction.rollback();
             return false;
         } finally {
@@ -109,7 +115,7 @@ public class AdvertisementRepository {
             }
             return false;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             transaction.rollback();
             return false;
         } finally {
@@ -127,7 +133,7 @@ public class AdvertisementRepository {
             query.setParameter("param", "%" + phrase.toUpperCase() + "%"); //w zapytaniu tez robie wielkie litery
             return query.getResultList();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return Collections.emptyList();
         } finally {
@@ -150,7 +156,7 @@ public class AdvertisementRepository {
             query.setParameter("location", "%" + location.toUpperCase() + "%");
             return query.getResultList();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return Collections.emptyList();
         } finally {

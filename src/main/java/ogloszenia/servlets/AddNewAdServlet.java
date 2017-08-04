@@ -1,6 +1,7 @@
 package ogloszenia.servlets;
 
 import ogloszenia.model.Advertisement;
+import ogloszenia.model.CATEGORY;
 import ogloszenia.model.User;
 import ogloszenia.repository.AdvertisementRepository;
 
@@ -26,11 +27,13 @@ public class AddNewAdServlet extends HttpServlet {
         BigDecimal price = BigDecimal.ZERO;
         String description;
         String location;
+        CATEGORY category = null;
 
 
         title = req.getParameter("title");
         try {
             price = new BigDecimal(req.getParameter("price"));
+            category = CATEGORY.valueOf(req.getParameter("category"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,17 +45,19 @@ public class AddNewAdServlet extends HttpServlet {
             writer.write("blad!");
         }
 
-        User owner = new User();
-        owner.setCityName("Poznań");
-        owner.setEmail("example@com.pl");
-        owner.setNick("testUser");
-        owner.setPassword("admin");
+//        User owner = new User();
+//        owner.setCityName("Poznań");
+//        owner.setEmail("example@com.pl");
+//        owner.setNick("testUser");
+//        owner.setPassword("admin");
 
-        Advertisement newAd = new Advertisement(title, price, description, location, owner);
-        AdvertisementRepository.persist(newAd);
+        Advertisement newAd = new Advertisement(title, price, description, location, category);
+        AdvertisementRepository.persist(newAd, 8);
 
-        PrintWriter writer = resp.getWriter();
-        writer.write("ok!");
+        resp.sendRedirect("products.jsp?category="+ newAd.getCategory());
+
+//        PrintWriter writer = resp.getWriter();
+//        writer.write("ok!");
     }
 
     private boolean isValid(String title, BigDecimal price, String description, String location) {
