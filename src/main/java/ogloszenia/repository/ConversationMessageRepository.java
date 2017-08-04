@@ -1,7 +1,10 @@
 package ogloszenia.repository;
 
+import ogloszenia.model.Conversation;
 import ogloszenia.model.ConversationMessage;
+import ogloszenia.model.User;
 import ogloszeniar.hibernate.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
@@ -13,17 +16,29 @@ import java.util.List;
  */
 public class ConversationMessageRepository {
 
+    final static Logger logger = Logger.getLogger(ConversationMessageRepository.class);
+
     //dodanie pojedynczej wiadomosci do bazy
     public static Integer persist(ConversationMessage conversationMessage) {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
             session.getTransaction().begin();
+
+            if(! session.contains(conversationMessage.getConversation())) {
+                conversationMessage.setConversation((Conversation) session.merge(conversationMessage.getConversation()));
+            }
+            if(! session.contains(conversationMessage.getAuthor())) {
+                conversationMessage.setAuthor((User) session.merge(conversationMessage.getAuthor()));
+            }
+
             session.persist(conversationMessage);
             session.getTransaction().commit();
+            logger.info("ddddddddd");
             return conversationMessage.getId();
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return 0;
         } finally {
@@ -41,7 +56,7 @@ public class ConversationMessageRepository {
             query.setParameter("id",id);
             return  query.getResultList();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex);
             session.getTransaction().rollback();
             return Collections.emptyList();
         } finally {

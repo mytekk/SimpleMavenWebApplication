@@ -96,8 +96,8 @@
             <h4>${ad.owner.email}</h4>
             <h4>${ad.owner.cityName}</h4>
             <div class="conversation-container">
-                <form action="add-new-conv" method="post">
-                    <input type="hidden" name="idAdvertisement" value="${ad.id}"/>
+                <form action="/add-new-conv" method="post">
+                    <input type="hidden" name="advertisementId" value="${ad.id}"/>
                     <textarea name="message" class="form-control" rows="6" required="required"></textarea>
                     <button class="btn btn-classic" type="submit">Wyślij</button>
                 </form>
