@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by RENT on 2017-08-01.
@@ -42,29 +43,33 @@ public class ConversationMessageRepository {
     }
 
     //dodanie pojedynczej wiadomosci do bazy
-    public static Integer persist(ConversationMessage conversationMessage) {
+    public static Optional<ConversationMessage> persist(ConversationMessage conversationMessage, Integer userId) {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
             session.getTransaction().begin();
 
+            //sprawdzamy czy konewrsacja z argumentu funkcji juz istnieje w bazie, czy nie
             if(! session.contains(conversationMessage.getConversation()) && conversationMessage.getConversation().getId()!= null ) {
-
+                //konwersacja juz istnieje
                 conversationMessage.setConversation((Conversation) session.merge(conversationMessage.getConversation()));
+            } else {
+                Conversation c=    conversationMessage.getConversation();
+                c.setConversationReceiver((User) session.merge(UserRepository.findById(c.getConversationReceiver().getId()).get()));
+                c.setConversationSender((User) session.merge(UserRepository.findById(c.getConversationSender().getId()).get()));
+                conversationMessage.setConversation(c);
             }
-            if(! session.contains(conversationMessage.getAuthor()) && conversationMessage.getAuthor().getId()!= null) {
-                conversationMessage.setAuthor((User) session.merge(conversationMessage.getAuthor()));
-            }
+
+            conversationMessage.setAuthor((User) session.merge(UserRepository.findById(userId).get()));
 
             session.persist(conversationMessage);
             session.getTransaction().commit();
-            logger.info("ddddddddd");
-            return conversationMessage.getId();
+            return Optional.ofNullable(conversationMessage);
         } catch (Exception ex) {
             ex.printStackTrace();
             logger.error(ex);
             session.getTransaction().rollback();
-            return 0;
+            return Optional.empty();
         } finally {
             session.close();
         }

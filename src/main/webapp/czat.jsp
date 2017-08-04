@@ -64,6 +64,11 @@
         </div>
     </div>
 
+    <!-- kategorie -->
+    <div class="container category">
+        <c:import url="category.jsp" />
+    </div>
+
     <!-- kontener z tytulem ogloszenia -->
     <div class="container category">
         <div class="col-md-6">
@@ -96,7 +101,7 @@
 
                     <c:forEach items="${conversationMessages}" var="cm">
 
-                        <c:if test="${cm.owner.id==8}">
+                        <c:if test="${cm.author.id==8}">
                             <div class="col-md-12">
                                 <div class="panel panel-default my-message">
                                     <div class="panel-heading date-panel ">${cm.createDate}</div>
@@ -105,7 +110,7 @@
                             </div>
                         </c:if>
 
-                        <c:if test="${cm.owner.id !=8}">
+                        <c:if test="${cm.author.id !=8}">
                             <div class="col-md-12">
                                 <div class="panel panel-default other-message">
                                     <div class="panel-heading date-panel ">${cm.createDate}</div>

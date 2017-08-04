@@ -66,4 +66,21 @@ public class UserRepository {
         }
     }
 
+    public static Optional<User> findByMailAndPassword(String email, String password) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            String hql = "SELECT  e FROM User e WHERE e.email=:email and e.password = :password";
+            Query query = session.createQuery(hql);
+            query.setParameter("email",email);
+            query.setParameter("password",password);
+            return  Optional.ofNullable( (User)query.getSingleResult());
+        } catch (Exception ex) {
+            logger.error(ex);
+            session.getTransaction().rollback();
+            return Optional.empty();
+        } finally {
+            session.close();
+        }
+    }
 }

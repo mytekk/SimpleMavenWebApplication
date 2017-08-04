@@ -1,9 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %> <!-- zaciagamy biblioteke jstl -->
-<%@ page import="ogloszenia.repository.*,java.util.List,ogloszenia.model.*" %> <!-- importujemy to c opotrzebujemy, nie trzeba servletow -->
+<%@ page import="ogloszenia.repository.*,java.util.List,ogloszenia.model.*" %>
+<%@ page import="java.util.Optional" %>
+<!-- importujemy to c opotrzebujemy, nie trzeba servletow -->
 
 <!-- pobieramy liste kategorii -->
 <c:set var="categoryList" value="${CategoryRepository.findAll()}"/>
+
+<%
+    Integer userId = (Integer) request.getSession().getAttribute("userId");
+    if (userId != null) {
+        Optional<User> user = UserRepository.findById(userId);
+        if (user.isPresent()) {
+            String nick = user.get().getNick();
+            pageContext.setAttribute("nick", nick);
+
+        }
+    }
+%>
 
 <!DOCTYPE html>
 
@@ -29,7 +43,15 @@
         <div class="col-md-6">
         </div>
         <div class="logo col-md-4 menu">
-            <div>Login: testowe</div>
+            <div>
+                Login:
+                    <c:if test="${! empty nick}">
+                        ${nick}
+                    </c:if>
+                    <c:if test="${empty nick}">
+                    zaloguj sie
+                </c:if>
+            </div>
 
            <div>menu</div>
             <div id="nav-icon1">
@@ -60,19 +82,7 @@
 
    <!-- kategorie -->
     <div class="container category">
-
-        <c:forEach items="${categoryList}" var="categoryDTO">
-
-            <div class="col-md-3">
-                <span class="category-item fa ${categoryDTO.iconName}" style="font-size:20px;" >
-                <a href="products.jsp?category=${categoryDTO.category}">${categoryDTO.name}</a>
-                </span>
-            </div>
-
-        </c:forEach>
-
-
-
+        <c:import url="category.jsp" />
     </div>
 
 

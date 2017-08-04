@@ -61,6 +61,11 @@
         </div>
     </div>
 
+    <!-- kategorie -->
+    <div class="container category">
+        <c:import url="category.jsp" />
+    </div>
+
     <!-- kontener z tytulem -->
     <div class="container category">
         <div class="col-md-6">

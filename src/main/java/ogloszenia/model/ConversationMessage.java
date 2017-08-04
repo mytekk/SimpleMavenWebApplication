@@ -40,10 +40,9 @@ public class ConversationMessage {
     public ConversationMessage() {
     }
 
-    public ConversationMessage(Conversation conversation, String messageContent, User author) {
+    public ConversationMessage(Conversation conversation, String messageContent) {
         this.conversation = conversation;
         this.messageContent = messageContent;
-        this.author = author;
         this.createDate = LocalDate.now();
     }
 
