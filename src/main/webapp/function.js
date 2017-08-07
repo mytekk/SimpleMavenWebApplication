@@ -5,3 +5,7 @@ $(document).ready(function(){
 		$(this).toggleClass('open');
 	});
 });
+
+function myFunction() {
+	document.getElementById("myDropdown").classList.toggle("show");
+}
