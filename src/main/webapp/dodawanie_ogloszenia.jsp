@@ -9,6 +9,11 @@
     List<CategoryDTO> allCategories = CategoryRepository.findAll();
     pageContext.setAttribute("allCategories", allCategories);
 
+    Integer userId = (Integer) request.getSession().getAttribute("userId");
+    if (userId == null) {
+        response.sendRedirect("login.jsp");
+    }
+
 %>
 
 <!DOCTYPE html>
