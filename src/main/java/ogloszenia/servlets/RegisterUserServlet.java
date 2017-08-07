@@ -30,11 +30,11 @@ public class RegisterUserServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
 
         if (isNotValid(nick, password, email, location)) {
-            writer.write("blad!");
+            resp.sendRedirect("dodawanie-uzytkownika.jsp");
         } else {
             User user = new User(nick, password, email, location);
             UserRepository.persist(user);
-            writer.write("ok!");
+            resp.sendRedirect("login.jsp");
         }
 
     }
