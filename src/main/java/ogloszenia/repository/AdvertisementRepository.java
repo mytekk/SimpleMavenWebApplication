@@ -167,4 +167,25 @@ public class AdvertisementRepository {
         }
     }
 
+    // trzy randomowe ogloszenia
+    public static List<Advertisement> findRandomThreeAd() {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession().getSession();
+            String hql = "SELECT e FROM Advertisement e ORDER BY RAND()";
+            Query query = session.createQuery(hql);
+            query.setMaxResults(3);
+            return query.getResultList();
+        } catch (Exception ex) {
+            logger.error(ex);
+            session.getTransaction().rollback();
+            return Collections.emptyList();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+    }
+
 }

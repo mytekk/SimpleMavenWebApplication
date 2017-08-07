@@ -4,6 +4,8 @@
 <%@ page import="java.util.Optional" %>
 <!-- importujemy to c opotrzebujemy, nie trzeba servletow -->
 
+<% pageContext.setAttribute("randomAdList", AdvertisementRepository.findRandomThreeAd()); %>
+
 <!DOCTYPE html>
 
 <head>
@@ -51,54 +53,26 @@
 
    <!-- kontener z contentem -->
     <div class="container ad">
+        <c:forEach items="${randomAdList}" var="ad">
+            <!-- pojedyncze ogloszenie -->
+            <div class="media panel">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object small-object"
+                             src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg"
+                             alt="brak zdjeci">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="product.jsp?advertisementId=${ad.id}">${ad.title}</a></h4>
+                    ${ad.text}
+                    <h3 class="price">
+                        ${ad.price} zł
+                    </h3>
+                </div>
+            </div>
+        </c:forEach>
 
-       <!-- pierwsze ogloszenie -->
-        <div class="media panel">
-            <div class="media-left media-middle">
-                <a href="#">
-                    <img class="media-object small-object" src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg" alt="brak zdjeci">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Middle aligned media</h4>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, hic fugiat id illo quod porro quam corporis sint quidem blanditiis quo quas reprehenderit officia! Quibusdam magni ipsa voluptas ullam molestiae.
-                <h3 class="price">
-                    50.000 zł
-                </h3>
-            </div>
-        </div>
-
-       <!-- drugie ogloszenie -->
-        <div class="media panel">
-            <div class="media-left media-middle">
-                <a href="#">
-                    <img class="media-object small-object" src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg" alt="brak zdjeci">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Middle aligned media</h4>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, hic fugiat id illo quod porro quam corporis sint quidem blanditiis quo quas reprehenderit officia! Quibusdam magni ipsa voluptas ullam molestiae.
-                <h3 class="price">
-                    50.000 zł
-                </h3>
-            </div>
-        </div>
-
-       <!-- trzecie ogloszenie -->
-        <div class="media panel">
-            <div class="media-left media-middle">
-                <a href="#">
-                    <img class="media-object small-object" src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg" alt="brak zdjeci">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Middle aligned media</h4>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, hic fugiat id illo quod porro quam corporis sint quidem blanditiis quo quas reprehenderit officia! Quibusdam magni ipsa voluptas ullam molestiae.
-                <h3 class="price">
-                    50.000 zł
-                </h3>
-            </div>
-        </div>
 
     </div>
 
