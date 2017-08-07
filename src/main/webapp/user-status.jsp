@@ -28,6 +28,6 @@
         Login: ${nick} <a href="/logout">(wyloguj się)</a>
     </c:if>
     <c:if test="${empty nick}">
-        <a href="login.html">Zaloguj się</a>
+        <a href="login.jsp">Zaloguj się</a> / <a href="dodawanie-uzytkownika.jsp">Zarejestruj się</a>
     </c:if>
 </div>

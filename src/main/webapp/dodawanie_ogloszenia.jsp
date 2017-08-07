@@ -28,7 +28,7 @@
     <!-- header strony -->
     <div class="container header">
         <div class="logo col-md-2">
-            <img src="https://securet9.classistatic.com/assets/images/pl_PL/logo-11309c4e19.png">
+            <img src="marketlogo.png" alt="brak zdjecia" />
         </div>
         <div class="col-md-6">
         </div>

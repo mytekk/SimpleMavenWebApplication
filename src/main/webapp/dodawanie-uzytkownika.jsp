@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %> <!-- zaciagamy biblioteke jstl -->
+<%@ page import="ogloszenia.repository.*,java.util.List,ogloszenia.model.*" %>
+
 <!DOCTYPE html>
 
 <head>
@@ -15,12 +19,13 @@
     <!-- header strony -->
     <div class="container header">
         <div class="logo col-md-2">
-            <img src="https://securet9.classistatic.com/assets/images/pl_PL/logo-11309c4e19.png">
+            <img src="marketlogo.png" alt="brak zdjecia" />
         </div>
         <div class="col-md-6">
         </div>
         <div class="logo col-md-4 menu">
-            <div>Login: testowe</div>
+
+            <c:import url="user-status.jsp" />
 
             <div id="nav-icon1">
                 <span></span>
@@ -51,14 +56,18 @@
     <!-- kontener z tytulem -->
     <div class="container category">
         <div class="col-md-6">
-            <h2>Logowanie uzytkownika</h2>
+            <h2>Dodaj nowego użytkownika</h2>
         </div>
     </div>
 
     <!-- kontener z contentem -->
     <div class="container ad">
 
-        <form action="/login" method="post">
+        <form action="/ad-new-user" method="post">
+            <div class="form-group">
+                <label>Nick</label>
+                <input class="form-control" name="nick" type="text" required />
+            </div>
             <div class="form-group">
                 <label>email</label>
                 <input class="form-control" name="email" type="email" required />
@@ -68,7 +77,11 @@
                 <input class="form-control" name="password" type="password" required />
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-classic">Zaloguj sie</button>
+                <label>Lokalizacja</label>
+                <input class="form-control" name="location" type="text" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-classic">Zarejestruj</button>
             </div>
         </form>
 
