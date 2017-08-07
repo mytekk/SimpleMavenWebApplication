@@ -9,6 +9,7 @@
 <head>
     <title>Serwis z ogloszeniami</title>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <link rel="stylesheet" href="style.css">
@@ -22,23 +23,7 @@
 
    <!-- header strony -->
     <div class="container header">
-        <div class="logo col-md-2">
-            <img src="marketlogo.png" alt="brak zdjecia" />
-        </div>
-        <div class="col-md-6">
-        </div>
-        <div class="logo col-md-4 menu">
-
-            <c:import url="user-status.jsp" />
-
-           <div>menu</div>
-            <div id="nav-icon1">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-        </div>
+        <c:import url="top-menu.jsp"/>
     </div>
 
     <!-- wyszukiwarka -->

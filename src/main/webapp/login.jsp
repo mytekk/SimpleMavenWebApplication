@@ -18,22 +18,7 @@
 
     <!-- header strony -->
     <div class="container header">
-        <div class="logo col-md-2">
-            <img src="marketlogo.png" alt="brak zdjecia" />
-        </div>
-        <div class="col-md-6">
-        </div>
-        <div class="logo col-md-4 menu">
-
-            <c:import url="user-status.jsp" />
-
-            <div id="nav-icon1">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-        </div>
+        <c:import url="top-menu.jsp"/>
     </div>
 
     <!-- wyszukiwarka -->
