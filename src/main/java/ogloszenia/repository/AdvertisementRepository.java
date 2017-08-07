@@ -62,10 +62,11 @@ public class AdvertisementRepository {
         try {
             session = HibernateUtil.openSession().getSession();
             session.getTransaction().begin();
-            advertisement.setOwner( (User) session.merge(UserRepository.findById(userId).get()));
-            //
+
             //zadanego usera dopisuje jako ownera ogloszenia
-            session.persist(advertisement);
+            advertisement.setOwner(UserRepository.findById(userId).get());
+
+            session.saveOrUpdate(advertisement);
             session.getTransaction().commit();
             return advertisement.getId();
         } catch (Exception ex) {
