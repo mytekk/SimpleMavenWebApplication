@@ -4,21 +4,6 @@
 <%@ page import="java.util.Optional" %>
 <!-- importujemy to c opotrzebujemy, nie trzeba servletow -->
 
-<!-- pobieramy liste kategorii -->
-<c:set var="categoryList" value="${CategoryRepository.findAll()}"/>
-
-<%
-    Integer userId = (Integer) request.getSession().getAttribute("userId");
-    if (userId != null) {
-        Optional<User> user = UserRepository.findById(userId);
-        if (user.isPresent()) {
-            String nick = user.get().getNick();
-            pageContext.setAttribute("nick", nick);
-
-        }
-    }
-%>
-
 <!DOCTYPE html>
 
 <head>
@@ -43,15 +28,8 @@
         <div class="col-md-6">
         </div>
         <div class="logo col-md-4 menu">
-            <div>
-                Login:
-                    <c:if test="${! empty nick}">
-                        ${nick}
-                    </c:if>
-                    <c:if test="${empty nick}">
-                    zaloguj sie
-                </c:if>
-            </div>
+
+            <c:import url="user-status.jsp" />
 
            <div>menu</div>
             <div id="nav-icon1">

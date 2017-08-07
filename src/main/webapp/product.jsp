@@ -34,7 +34,8 @@
     <div class="col-md-6">
     </div>
     <div class="logo col-md-4 menu">
-        <div>Login: testowe</div>
+
+        <c:import url="user-status.jsp" />
 
         <div id="nav-icon1">
             <span></span>
