@@ -26,10 +26,10 @@ public class ConversationMessageRepository {
             session.getTransaction().begin();
 
             conversationMessage.setAuthor(UserRepository.findById(userId).get());
-
             session.persist(conversationMessage);
+
             session.getTransaction().commit();
-            logger.info("ddddddddd");
+
             return conversationMessage.getId();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,20 +49,9 @@ public class ConversationMessageRepository {
             session = HibernateUtil.openSession();
             session.getTransaction().begin();
 
-            //sprawdzamy czy konewrsacja z argumentu funkcji juz istnieje w bazie, czy nie
-            if(! session.contains(conversationMessage.getConversation()) && conversationMessage.getConversation().getId()!= null ) {
-                //konwersacja juz istnieje
-                conversationMessage.setConversation((Conversation) session.merge(conversationMessage.getConversation()));
-            } else {
-                Conversation c=    conversationMessage.getConversation();
-                c.setConversationReceiver((User) session.merge(UserRepository.findById(c.getConversationReceiver().getId()).get()));
-                c.setConversationSender((User) session.merge(UserRepository.findById(c.getConversationSender().getId()).get()));
-                conversationMessage.setConversation(c);
-            }
+            conversationMessage.setAuthor(UserRepository.findById(userId).get());
+            session.saveOrUpdate(conversationMessage);
 
-            conversationMessage.setAuthor((User) session.merge(UserRepository.findById(userId).get()));
-
-            session.persist(conversationMessage);
             session.getTransaction().commit();
             return Optional.ofNullable(conversationMessage);
         } catch (Exception ex) {
