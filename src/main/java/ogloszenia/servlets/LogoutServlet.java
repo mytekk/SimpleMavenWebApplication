@@ -31,7 +31,8 @@ public class LogoutServlet extends HttpServlet {
                 resp.getWriter().write("Nie ma takiego usera w bazie.");
             }
         } else {
-            resp.getWriter().write("Nikt nie jest zalogowany.");
+            //resp.getWriter().write("Nikt nie jest zalogowany.");
+            resp.sendRedirect("index.jsp");
         }
     }
 }

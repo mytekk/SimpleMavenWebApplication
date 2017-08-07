@@ -29,7 +29,9 @@ public class UserRepository {
             session.getTransaction().rollback();
             return Optional.empty();
         } finally {
-            session.close();
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
     }
 
@@ -45,7 +47,9 @@ public class UserRepository {
             ex.printStackTrace();
             session.getTransaction().rollback();
         } finally {
-            session.close();
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
     }
 
@@ -62,7 +66,9 @@ public class UserRepository {
             session.getTransaction().rollback();
             return Optional.empty();
         } finally {
-            session.close();
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
     }
 
@@ -80,7 +86,9 @@ public class UserRepository {
             session.getTransaction().rollback();
             return Optional.empty();
         } finally {
-            session.close();
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
     }
 }

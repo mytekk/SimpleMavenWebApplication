@@ -14,11 +14,17 @@ public class HibernateUtil {
             sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            throw new ExceptionInInitializerError("Blad polaczenia z baza danych!");
         }
     }
- 
-    public static Session openSession() {
-        return sessionFactory.openSession();
+
+    public static Session openSession() throws Exception {
+        Session session;
+        try {
+            session = sessionFactory.openSession();
+        } catch (Exception e) {
+            throw new Exception("Blad polaczenia z baza danych!");
+        }
+        return session;
     }
 }
