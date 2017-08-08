@@ -24,15 +24,14 @@ public class SearchAdServlet extends HttpServlet {
         location = req.getParameter("location");
         phrase = req.getParameter("phrase");
 
-        //user musi podac nazwie, nie musi podac lokaliacji
-        if (phrase.isEmpty()) {
-            resp.getWriter().write("Prosze wpisac zapytanie.");
-        } else if (location.isEmpty()) {
-            //szukamy po samej nazwie
-            List<Advertisement> searchedAds = AdvertisementRepository.findByPhrase(phrase);
+        //jesli phrase jest null, to zamieniamy ją na pusty lancuch, bo nulla nie mozna przeslac w url-u do strony jsp
+        phrase = (phrase == null) ? "" : phrase;
+
+        if (location == null || location.isEmpty()) { //location moze byc puste, wtedy wyszukujemy tylko po phrase. Tutaj byc moze przeslemy pusty lancuch (patrz wyzej), ale wtedy po stornie jsp wypiszemy odpowiedni komunukat
+            resp.sendRedirect("search-results.jsp?phrase=" + phrase);
         } else {
-            //szukamy po kolalizacji i po nazwie
-            List<Advertisement> searchedAds = AdvertisementRepository.findByPhraseAndLocation(phrase, location);
+            resp.sendRedirect("search-results.jsp?phrase=" + phrase + "&location=" + location);
         }
+
     }
 }
