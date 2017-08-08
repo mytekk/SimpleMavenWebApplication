@@ -28,22 +28,10 @@
         <c:import url="top-menu.jsp"/>
     </div>
 
-    <!-- wyszukiwarka -->
-    <div class="container">
-        <div>
-            <form action="/search" method="post">
-                <div class="form-group row col-md-5">
-                    <input type="text" placeholder="Wpisz nazwę..." name="phrase" class="form-control">
-                </div>
-                <div class="form-group row col-md-5">
-                    <input type="text" placeholder="Wpisz miejscowość..." name="location" class="form-control">
-                </div>
-                <div class="form-group row col-md-2">
-                    <button type="submit" class="btn btn-classic">Szukaj</button>
-                </div>
-            </form>
-        </div>
-    </div>
+   <!-- wyszukiwarka -->
+   <div class="container">
+       <c:import url="search-box.jsp"/>
+   </div>
 
    <!-- kategorie -->
     <div class="container category">

@@ -48,24 +48,19 @@
 
 <!-- wyszukiwarka -->
 <div class="container">
-    <div>
-        <form action="/search" method="post">
-            <div class="form-group row col-md-5">
-                <input type="text" placeholder="Wpisz nazwę..." name="phrase" class="form-control">
-            </div>
-            <div class="form-group row col-md-5">
-                <input type="text" placeholder="Wpisz miejscowość..." name="location" class="form-control">
-            </div>
-            <div class="form-group row col-md-2">
-                <button type="submit" class="btn btn-classic">Szukaj</button>
-            </div>
-        </form>
-    </div>
+    <c:import url="search-box.jsp"/>
 </div>
 
 <!-- kategorie -->
 <div class="container category">
     <c:import url="category.jsp"/>
+</div>
+
+<!-- kontener z tytulem strony -->
+<div class="container category">
+    <div class="col-md-7">
+        <h2>Wyniki wyszukiwania</h2>
+    </div>
 </div>
 
 
