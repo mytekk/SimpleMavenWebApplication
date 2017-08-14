@@ -188,4 +188,24 @@ public class AdvertisementRepository {
 
     }
 
+    public static List<Advertisement> findByOwnerId(Integer id) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession().getSession();
+
+            User owner = UserRepository.findById(id).get();
+
+            String hql = "SELECT e FROM Advertisement e WHERE e.owner = :owner";
+            Query<Advertisement> query = session.createQuery(hql, Advertisement.class);
+            query.setParameter("owner", owner);
+            return query.getResultList();
+        } catch (Exception ex) {
+            logger.error(ex);
+            session.getTransaction().rollback();
+            return Collections.emptyList();
+        } finally {
+            session.close();
+        }
+    }
+
 }

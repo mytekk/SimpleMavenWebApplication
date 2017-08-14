@@ -1,0 +1,124 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- zaciagamy biblioteke jstl -->
+<%@ page import="ogloszenia.repository.*,java.util.List,ogloszenia.model.*" %>
+<%@ page import="java.util.Optional" %>
+<%@ page import="java.util.Collections" %>
+<!-- importujemy to c opotrzebujemy, nie trzeba servletow -->
+
+<%
+    List<Advertisement> adsList = Collections.emptyList();
+
+    Integer userId = (Integer) request.getSession().getAttribute("userId");
+    if (userId == null) {
+        response.sendRedirect("login.jsp");
+    }
+
+    adsList = AdvertisementRepository.findByOwnerId(userId);
+
+    if (adsList.isEmpty()) {
+        pageContext.setAttribute("warning", "Mie udało się pobrać żadnych ogłoszeń...");
+    }
+    pageContext.setAttribute("adsList", adsList);
+%>
+
+<!DOCTYPE html>
+
+<head>
+    <title>Serwis z ogloszeniami</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="function.js"></script>
+</head>
+
+<body>
+
+<!-- header strony -->
+<div class="container header">
+    <c:import url="top-menu.jsp"/>
+</div>
+
+<!-- wyszukiwarka -->
+<div class="container">
+    <c:import url="search-box.jsp"/>
+</div>
+
+<!-- kategorie -->
+<div class="container category">
+    <c:import url="category.jsp"/>
+</div>
+
+<!-- kontener z tytulem strony -->
+<div class="container category">
+    <div class="col-md-7">
+        <h2>Twoje ogłoszenia</h2>
+    </div>
+</div>
+
+
+<!-- kontener z contentem -->
+<div class="container ad">
+
+    <c:if test="${! empty warning}">
+        ${warning}
+    </c:if>
+
+    <c:if test="${empty warning}">
+
+        <c:if test="${empty adsList}">
+            Brak wyników wyszukiwania...
+        </c:if>
+
+        <c:if test="${! empty adsList}">
+            <c:forEach items="${adsList}" var="ad">
+                <!-- pojedyncze ogloszenie -->
+                <div class="media panel">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object small-object"
+                                 src="http://blog.caranddriver.com/wp-content/uploads/2016/11/Ford-Mustang-Shelby-GT350-lead.jpg"
+                                 alt="brak zdjeci">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="product.jsp?advertisementId=${ad.id}">${ad.title}</a></h4>
+                            ${ad.text}
+                        <h3 class="price">
+                                ${ad.price} zł
+                        </h3>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+
+    </c:if>
+
+</div>
+
+
+<!-- footer -->
+<footer>
+    <div class="container footer form-inline">
+        <div class="col-md-3">
+            <a href="#">Strona główna</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Profil</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Aukcje</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Kontakt</a>
+        </div>
+    </div>
+</footer>
+
+</body>

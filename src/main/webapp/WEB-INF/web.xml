@@ -5,7 +5,7 @@
          version="3.0">
 
 
-    
+
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
@@ -80,6 +80,14 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>myAdsServlet</servlet-name>
+        <servlet-class>ogloszenia.servlets.ShowUsersAdsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myAdsServlet</servlet-name>
+        <url-pattern>/my-ads</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

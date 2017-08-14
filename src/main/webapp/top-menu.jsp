@@ -51,6 +51,7 @@
         <button onclick="myFunction()" class="dropbtn">Menu</button>
         <div id="myDropdown" class="dropdown-content">
             <a href="dodawanie_ogloszenia.jsp">Dodaj ogloszenie</a>
+            <a href="my-ads.jsp">Pokaż moje ogłoszenia</a>
         </div>
     </div>
 
