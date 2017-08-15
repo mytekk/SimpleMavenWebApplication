@@ -8,6 +8,10 @@
     if(ad.isPresent()){
         pageContext.setAttribute("advertisement", ad.get());
     }
+
+    Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+
 %>
 
 <c:set value="${advertisement}" var="ad" />
@@ -66,6 +70,29 @@
                 ${ad.text}
                 <h3 class="price">${ad.price}</h3>
             </div>
+
+
+
+            <c:if test="${! empty userId}">
+
+                    Konwersacje, które rozpocząłeś:
+                    <c:forEach items="${ad.conversations}" var="conversation">
+                    <c:if test="${userId == conversation.conversationSender.id}">
+                        <p>id: ${conversation.id}, sender: ${conversation.conversationSender}, receiver: ${conversation.conversationReceiver}</p>
+                    </c:if>
+                    </c:forEach>
+
+                    Konwersacje, których jesteś odbiorcą:
+                    <c:forEach items="${ad.conversations}" var="conversation">
+                    <c:if test="${userId == conversation.conversationReceiver.id}">
+                        <p>id: ${conversation.id}, sender: ${conversation.conversationSender}, receiver: ${conversation.conversationReceiver}</p>
+                    </c:if>
+                    </c:forEach>
+
+                </c:if>
+
+
+
         </div>
         <!-- prawa strona: imie usera, wyslij wiadomosc i inne teksty -->
         <div class="col-md-2">

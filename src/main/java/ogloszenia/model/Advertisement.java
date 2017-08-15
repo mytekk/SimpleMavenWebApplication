@@ -74,7 +74,7 @@ public class Advertisement {
 	@Column(nullable=false)
 	Integer views;
 
-	@OneToMany(mappedBy="advertisement")
+	@OneToMany(mappedBy="advertisement", fetch = FetchType.EAGER)
 	Set<Conversation> conversations;
 
     @OneToMany(mappedBy = "advertisement")
@@ -222,6 +222,11 @@ public class Advertisement {
 		this.owner = owner;
 	}
 
+	public Set<Conversation> getConversations() {
+		return conversations;
+	}
 
-
+	public void setConversations(Set<Conversation> conversations) {
+		this.conversations = conversations;
+	}
 }
